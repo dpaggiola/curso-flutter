@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:platzi_trips_app/review.dart';
 import 'description_place.dart';
 
 void main() => runApp(MyApp());
@@ -36,7 +37,13 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Hola Mundo Feliz"),
         ),
-        body: DescriptionPlace("Bahamas", 4, descriptionDummy),
+        body: Review(
+            "assets/img/people.jpg",
+            "Varuna Yasas",
+            "1 review 5 photos",
+            "There is an amazing place in Sri Lanka",
+            3
+        ),
       ),
     );
   }

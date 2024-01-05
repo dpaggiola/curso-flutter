@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DescriptionPlace extends StatelessWidget {
+
+  DescriptionPlace(this.namePlace, this.stars, this.descriptionPlace, {super.key});
+
   String namePlace;
   int stars;
   String descriptionPlace;
-
-  DescriptionPlace(this.namePlace, this.stars, this.descriptionPlace, {super.key});
 
   @override
   Widget build(BuildContext context) {
