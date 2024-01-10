@@ -22,7 +22,7 @@ class _FloatingActionButtonGreenState extends State<FloatingActionButtonGreen> {
       mini: true,
       tooltip: "Fav",
       onPressed: onPressedFav,
-      child: Icon(
+      child: const Icon(
         Icons.favorite_border,
       ),
     );
