@@ -37,7 +37,7 @@ class ButtonPurple extends StatelessWidget {
         child: Center(
           child: Text(
             buttonText,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontFamily: "Lato",
               color: Colors.white,
