@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class GradientBack extends StatelessWidget {
-  const GradientBack({super.key});
+  GradientBack(this.title, {super.key});
+
+  String title = "Popular";
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,16 @@ class GradientBack extends StatelessWidget {
           tileMode: TileMode.clamp,
         ),
       ),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 30,
+          fontFamily: "Lato",
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      alignment: const Alignment(-0.9, -0.6),
     );
   }
 }
