@@ -1,14 +1,38 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_book/screens/recipe_detail.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  Future<List<dynamic>> FetchRecipes() async {
+    // Android 10.0.2.2
+    // IOS 127.0.0.1
+    // WEB localhost
+    final url = Uri.parse('http://10.0.2.2:12346/recipes');
+    final response = await http.get(url);
+    final data = jsonDecode(response.body);
+
+    return data['recipes'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[_RecipesCard(context), _RecipesCard(context)],
+      body: FutureBuilder<List<dynamic>>(
+        future: FetchRecipes(),
+        builder: (context, snapshot) {
+          final recipes = snapshot.data ?? [];
+
+          return ListView.builder(
+            itemCount: recipes.length,
+            itemBuilder: (context, index) {
+              return _RecipesCard(context, recipes[index]);
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
@@ -34,12 +58,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _RecipesCard(BuildContext context) {
+  Widget _RecipesCard(BuildContext context, dynamic recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RecipeDetail(recipeName: 'Lasagna')),
+          MaterialPageRoute(
+            builder: (context) => RecipeDetail(recipeName: recipe['name']),
+          ),
         );
       },
       child: Padding(
@@ -56,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
-                      'https://static.platzi.com/media/uploads/flutter_lasana_b894f1aee1.jpg',
+                      recipe['image_link'],
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,13 +93,13 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Lasagna',
+                      recipe['name'],
                       style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
                     ),
                     SizedBox(height: 4),
                     Container(height: 2, width: 75, color: Colors.orange),
                     Text(
-                      'Daniel P',
+                      recipe['author'],
                       style: TextStyle(fontSize: 16, fontFamily: 'Quicksand'),
                     ),
                     SizedBox(height: 4),
